@@ -15,9 +15,7 @@ package io.trino.benchto.driver.macro.shell;
 
 import com.google.common.collect.ImmutableMap;
 import io.trino.benchto.driver.IntegrationTest;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
@@ -29,13 +27,12 @@ import java.util.UUID;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.exists;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ShellMacroExecutionDriverTest
         extends IntegrationTest
 {
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     @Autowired
     private ShellMacroExecutionDriver macroService;
 
@@ -56,8 +53,8 @@ public class ShellMacroExecutionDriverTest
     @Test
     public void shouldFailWhenMacroFails()
     {
-        expectedException.expectMessage("Macro error-macro exited with code 1");
-        macroService.runBenchmarkMacro("error-macro", Optional.empty(), Optional.empty());
+        Throwable ex = assertThrows(Throwable.class, () -> macroService.runBenchmarkMacro("error-macro", Optional.empty(), Optional.empty()));
+        assertEquals("Macro error-macro exited with code 1", ex.getMessage());
     }
 
     @Test
@@ -65,15 +62,15 @@ public class ShellMacroExecutionDriverTest
 
     {
         // Spring Boot 2 changed the behavior for reading properties and will no longer create a macro without an underlying command defined
-        expectedException.expectMessage("Macro no-command-macro is not defined");
-        macroService.runBenchmarkMacro("no-command-macro", Optional.empty(), Optional.empty());
+        Throwable ex = assertThrows(Throwable.class, () -> macroService.runBenchmarkMacro("no-command-macro", Optional.empty(), Optional.empty()));
+        assertEquals("Macro no-command-macro is not defined", ex.getMessage());
     }
 
     @Test
     public void shouldFailNoMacro()
 
     {
-        expectedException.expectMessage("Macro non-existing-macro is not defined");
-        macroService.runBenchmarkMacro("non-existing-macro", Optional.empty(), Optional.empty());
+        Throwable ex = assertThrows(Throwable.class, () -> macroService.runBenchmarkMacro("non-existing-macro", Optional.empty(), Optional.empty()));
+        assertEquals("Macro non-existing-macro is not defined", ex.getMessage());
     }
 }

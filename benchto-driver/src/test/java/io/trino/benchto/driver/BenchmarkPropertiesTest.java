@@ -13,9 +13,7 @@
  */
 package io.trino.benchto.driver;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.Duration;
@@ -24,12 +22,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BenchmarkPropertiesTest
 {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void parseActiveVariablesForNull()
     {
@@ -48,9 +45,8 @@ public class BenchmarkPropertiesTest
     @Test
     public void parseActiveVariablesWithWrongFormat()
     {
-        thrown.expect(IllegalStateException.class);
-        thrown.expectMessage("Incorrect format of variable: 'ala=kot=pies', while proper format is 'key=value'");
-        activeVariables("ala=kot=pies");
+        IllegalStateException ex = assertThrows(IllegalStateException.class, () -> activeVariables("ala=kot=pies"));
+        assertEquals("Incorrect format of variable: 'ala=kot=pies', while proper format is 'key=value'", ex.getMessage());
     }
 
     @Test

@@ -13,7 +13,7 @@
  */
 package io.trino.benchto.driver.utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

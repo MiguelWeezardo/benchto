@@ -19,9 +19,7 @@ import io.trino.benchto.driver.IntegrationTest;
 import io.trino.benchto.driver.Query;
 import io.trino.benchto.driver.loader.QueryLoader;
 import io.trino.benchto.driver.loader.SqlStatementGenerator;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -29,13 +27,12 @@ import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class QueryLoaderTest
         extends IntegrationTest
 {
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     @Autowired
     private QueryLoader queryLoader;
 
@@ -60,28 +57,22 @@ public class QueryLoaderTest
     @Test
     public void shouldFailWhenNoQueryFile()
     {
-        expectedException.expect(BenchmarkExecutionException.class);
-        expectedException.expectMessage("Could not find any SQL query file for query name: presto/non_existing_file.sql");
-
-        queryLoader.loadFromFile("presto/non_existing_file.sql");
+        BenchmarkExecutionException ex = assertThrows(BenchmarkExecutionException.class, () -> queryLoader.loadFromFile("presto/non_existing_file.sql"));
+        assertEquals("Could not find any SQL query file for query name: presto/non_existing_file.sql", ex.getMessage());
     }
 
     @Test
     public void shouldFailWhenQueryFileIsDuplicated()
     {
-        expectedException.expect(BenchmarkExecutionException.class);
-        expectedException.expectMessage("Found multiple SQL query files for query name: presto/duplicate_query.sql");
-
-        queryLoader.loadFromFile("presto/duplicate_query.sql");
+        BenchmarkExecutionException ex = assertThrows(BenchmarkExecutionException.class, () -> queryLoader.loadFromFile("presto/duplicate_query.sql"));
+        assertEquals("Found multiple SQL query files for query name: presto/duplicate_query.sql", ex.getMessage());
     }
 
     @Test
     public void shouldFailsWhenRequiredAttributesAreAbsent()
     {
         Query query = queryLoader.loadFromFile("presto/simple_select.sql");
-
-        expectedException.expect(BenchmarkExecutionException.class);
-        sqlStatementGenerator.generateQuerySqlStatement(query, emptyMap());
+        BenchmarkExecutionException ex = assertThrows(BenchmarkExecutionException.class, () -> sqlStatementGenerator.generateQuerySqlStatement(query, emptyMap()));
     }
 
     private Map<String, String> createAttributes(String database, String schema)

@@ -13,9 +13,8 @@
  */
 package io.trino.benchto.service;
 
-import io.trino.benchto.service.category.IntegrationTest;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.time.ZonedDateTime;
 
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Category(IntegrationTest.class)
+@Tag("IntegrationTest")
 public class TagControllerTest
         extends IntegrationTestBase
 {

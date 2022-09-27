@@ -14,7 +14,7 @@
 package io.trino.benchto.driver.jdbc;
 
 import io.trino.benchto.driver.IntegrationTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 

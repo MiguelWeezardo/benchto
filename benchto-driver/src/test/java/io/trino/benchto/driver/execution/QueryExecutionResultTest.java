@@ -15,7 +15,7 @@ package io.trino.benchto.driver.execution;
 
 import io.trino.benchto.driver.Benchmark;
 import io.trino.benchto.driver.Query;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
 

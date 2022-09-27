@@ -19,14 +19,14 @@ import io.trino.benchto.driver.BenchmarkProperties;
 import io.trino.benchto.driver.DriverApp;
 import io.trino.benchto.driver.FailedBenchmarkExecutionException;
 import io.trino.benchto.driver.execution.ExecutionDriver;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -47,7 +47,7 @@ import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DriverApp.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class BenchtoTrinoIntegrationTest
 {
@@ -64,7 +64,7 @@ public class BenchtoTrinoIntegrationTest
     @Autowired
     protected ApplicationContext context;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup()
     {
         Network network = Network.newNetwork();

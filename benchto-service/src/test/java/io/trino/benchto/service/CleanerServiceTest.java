@@ -14,14 +14,13 @@
 package io.trino.benchto.service;
 
 import com.google.common.collect.ImmutableMap;
-import io.trino.benchto.service.category.IntegrationTest;
 import io.trino.benchto.service.model.BenchmarkRun;
 import io.trino.benchto.service.model.Environment;
 import io.trino.benchto.service.model.Status;
 import io.trino.benchto.service.repo.BenchmarkRunRepo;
 import io.trino.benchto.service.repo.EnvironmentRepo;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.ZonedDateTime;
@@ -29,7 +28,7 @@ import java.time.ZonedDateTime;
 import static io.trino.benchto.service.utils.TimeUtils.currentDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(IntegrationTest.class)
+@Tag("IntegrationTest")
 public class CleanerServiceTest
         extends IntegrationTestBase
 {

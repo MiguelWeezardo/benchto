@@ -13,7 +13,7 @@
  */
 package io.trino.benchto.driver.utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.trino.benchto.driver.utils.UnitConverter.parseValueAsUnit;
 import static javax.measure.unit.NonSI.BYTE;

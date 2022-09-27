@@ -18,12 +18,12 @@ import io.trino.benchto.driver.Benchmark;
 import io.trino.benchto.driver.concurrent.ExecutorServiceFactory;
 import io.trino.benchto.driver.listeners.benchmark.BenchmarkStatusReporter;
 import io.trino.benchto.driver.macro.MacroService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class BenchmarkExecutionDriverTest
 {
     @Mock
@@ -57,7 +57,7 @@ public class BenchmarkExecutionDriverTest
     @InjectMocks
     BenchmarkExecutionDriver driver;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         when(executorServiceFactory.create(anyInt())).thenReturn(executorService);

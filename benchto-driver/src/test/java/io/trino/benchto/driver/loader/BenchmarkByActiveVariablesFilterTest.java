@@ -15,7 +15,7 @@ package io.trino.benchto.driver.loader;
 
 import com.google.common.collect.ImmutableMap;
 import io.trino.benchto.driver.Benchmark;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.trino.benchto.driver.BenchmarkPropertiesTest.benchmarkPropertiesWithActiveVariables;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -17,7 +17,7 @@ import com.google.common.collect.ImmutableList;
 import io.trino.benchto.driver.execution.ExecutionDriver;
 import io.trino.benchto.driver.macro.MacroService;
 import org.hamcrest.Matcher;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;

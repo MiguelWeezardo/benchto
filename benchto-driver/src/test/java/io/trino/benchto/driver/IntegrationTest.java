@@ -13,19 +13,19 @@
  */
 package io.trino.benchto.driver;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.internal.util.MockUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {DriverApp.class, TestConfig.class}, webEnvironment = SpringBootTest.WebEnvironment.NONE, value = "executionSequenceId=BEN_SEQ_ID")
 public abstract class IntegrationTest
 {
@@ -37,7 +37,7 @@ public abstract class IntegrationTest
 
     protected MockRestServiceServer restServiceServer;
 
-    @Before
+    @BeforeEach
     public void resetMocks()
     {
         for (String name : context.getBeanDefinitionNames()) {
@@ -48,13 +48,13 @@ public abstract class IntegrationTest
         }
     }
 
-    @Before
+    @BeforeEach
     public void initializeRestServiceServer()
     {
         restServiceServer = MockRestServiceServer.createServer(restTemplate);
     }
 
-    @After
+    @AfterEach
     public void verifyRestServiceServer()
     {
         restServiceServer.verify();

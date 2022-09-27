@@ -13,7 +13,6 @@
  */
 package io.trino.benchto.service;
 
-import io.trino.benchto.service.category.IntegrationTest;
 import io.trino.benchto.service.model.BenchmarkRun;
 import io.trino.benchto.service.model.BenchmarkRunExecution;
 import io.trino.benchto.service.model.Environment;
@@ -22,8 +21,8 @@ import io.trino.benchto.service.model.Status;
 import io.trino.benchto.service.repo.BenchmarkRunRepo;
 import io.trino.benchto.service.repo.EnvironmentRepo;
 import io.trino.benchto.service.utils.TimeUtils;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
@@ -42,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Category(IntegrationTest.class)
+@Tag("IntegrationTest")
 public class BenchmarkControllerTest
         extends IntegrationTestBase
 {

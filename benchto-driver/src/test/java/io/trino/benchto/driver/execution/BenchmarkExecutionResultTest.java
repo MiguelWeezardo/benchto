@@ -16,7 +16,7 @@ package io.trino.benchto.driver.execution;
 import com.google.common.collect.ImmutableList;
 import io.trino.benchto.driver.Benchmark;
 import io.trino.benchto.driver.utils.TimeUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;

@@ -14,7 +14,7 @@
 package io.trino.benchto.driver.utils;
 
 import com.google.common.collect.ImmutableMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;

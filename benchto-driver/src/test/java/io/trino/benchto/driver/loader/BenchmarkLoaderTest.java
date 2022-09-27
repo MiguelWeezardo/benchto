@@ -25,10 +25,8 @@ import io.trino.benchto.driver.Query;
 import io.trino.benchto.driver.service.BenchmarkServiceClient;
 import org.assertj.core.api.MapAssert;
 import org.assertj.core.data.MapEntry;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
@@ -42,19 +40,18 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BenchmarkLoaderTest
 {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     private BenchmarkProperties benchmarkProperties;
 
     private BenchmarkLoader loader;
 
     private Duration benchmarkExecutionAge = Duration.ofDays(Integer.MAX_VALUE);
 
-    @Before
+    @BeforeEach
     public void setupBenchmarkLoader()
             throws Exception
     {
@@ -147,13 +144,13 @@ public class BenchmarkLoaderTest
     {
         loader.setup();
 
-        thrown.expect(BenchmarkExecutionException.class);
-        thrown.expectMessage("Benchmark with name \"duplicate_benchmark\" in multiple locations");
+        BenchmarkExecutionException ex = assertThrows(BenchmarkExecutionException.class, () -> {
+            withActiveBenchmarks("duplicate_benchmark");
+            withBenchmarksDirs("duplicate_benchmark_dir1", "duplicate_benchmark_dir2");
 
-        withActiveBenchmarks("duplicate_benchmark");
-        withBenchmarksDirs("duplicate_benchmark_dir1", "duplicate_benchmark_dir2");
-
-        loader.loadBenchmarks("sequenceId");
+            loader.loadBenchmarks("sequenceId");
+        });
+        assertEquals("Benchmark with name \"duplicate_benchmark\" in multiple locations", ex.getMessage());
     }
 
     @Test
@@ -162,12 +159,12 @@ public class BenchmarkLoaderTest
     {
         loader.setup();
 
-        thrown.expect(BenchmarkExecutionException.class);
-        thrown.expectMessage("Benchmark directories contain nested paths");
+        BenchmarkExecutionException ex = assertThrows(BenchmarkExecutionException.class, () -> {
+            withBenchmarksDirs("benchmark_dir", "benchmark_dir/nested");
 
-        withBenchmarksDirs("benchmark_dir", "benchmark_dir/nested");
-
-        loader.loadBenchmarks("sequenceId");
+            loader.loadBenchmarks("sequenceId");
+        });
+        assertEquals("Benchmark directories contain nested paths", ex.getMessage());
     }
 
     @Test
@@ -216,13 +213,13 @@ public class BenchmarkLoaderTest
     {
         loader.setup();
 
-        thrown.expect(BenchmarkExecutionException.class);
-        thrown.expectMessage("Recursive value substitution is not supported, invalid a: ${b}");
+        BenchmarkExecutionException ex = assertThrows(BenchmarkExecutionException.class, () -> {
+            withBenchmarksDirs("unit-benchmarks-invalid");
+            withActiveBenchmarks("cycle-variables-benchmark");
 
-        withBenchmarksDirs("unit-benchmarks-invalid");
-        withActiveBenchmarks("cycle-variables-benchmark");
-
-        loader.loadBenchmarks("sequenceId");
+            loader.loadBenchmarks("sequenceId");
+        });
+        assertEquals("Recursive value substitution is not supported, invalid a: ${b}", ex.getMessage());
     }
 
     @Test

@@ -17,7 +17,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import io.trino.benchto.driver.presto.PrestoClient;
 import io.trino.benchto.driver.service.Measurement;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;

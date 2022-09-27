@@ -14,9 +14,7 @@
 package io.trino.benchto.driver.jdbc;
 
 import io.trino.benchto.driver.IntegrationTest;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -46,9 +44,6 @@ public class ConnectionPoolTest
 
     @Autowired
     private ApplicationContext applicationContext;
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void shouldSuccessfullyOpenMaxConnectionsCount()

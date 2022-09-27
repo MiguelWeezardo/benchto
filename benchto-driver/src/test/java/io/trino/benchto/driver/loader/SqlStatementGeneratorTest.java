@@ -15,8 +15,8 @@ package io.trino.benchto.driver.loader;
 
 import com.google.common.collect.ImmutableMap;
 import io.trino.benchto.driver.Query;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class SqlStatementGeneratorTest
 {
     private SqlStatementGenerator sqlStatementGenerator;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         sqlStatementGenerator = new SqlStatementGenerator();

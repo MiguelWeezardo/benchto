@@ -15,7 +15,7 @@ package io.trino.benchto.driver.utils;
 
 import com.google.common.io.Resources;
 import io.trino.benchto.driver.execution.ResultComparisonException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.nio.file.Path;

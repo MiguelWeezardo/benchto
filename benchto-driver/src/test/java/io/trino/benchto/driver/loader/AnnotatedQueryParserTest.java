@@ -15,11 +15,12 @@ package io.trino.benchto.driver.loader;
 
 import com.google.common.collect.ImmutableList;
 import io.trino.benchto.driver.Query;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AnnotatedQueryParserTest
 {
@@ -57,12 +58,14 @@ public class AnnotatedQueryParserTest
                 "sql query 1;\nsql query 2");
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void shouldFailRedundantOptions()
     {
-        List<String> fileContent = ImmutableList.of(
-                "--! property1: value",
-                "--! property1: value2");
-        queryParser.parseLines("whatever", fileContent);
+        assertThrows(IllegalStateException.class, () -> {
+            List<String> fileContent = ImmutableList.of(
+                    "--! property1: value",
+                    "--! property1: value2");
+            queryParser.parseLines("whatever", fileContent);
+        });
     }
 }

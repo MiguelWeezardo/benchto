@@ -13,10 +13,9 @@
  */
 package io.trino.benchto.service;
 
-import io.trino.benchto.service.category.IntegrationTest;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Category(IntegrationTest.class)
+@Tag("IntegrationTest")
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ServiceApp.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class IntegrationTestBase
@@ -42,7 +41,7 @@ public class IntegrationTestBase
 
     protected MockMvc mvc;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();

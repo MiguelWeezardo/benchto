@@ -23,12 +23,12 @@ import io.trino.benchto.driver.listeners.benchmark.DefaultBenchmarkExecutionList
 import io.trino.benchto.driver.loader.BenchmarkLoader;
 import io.trino.benchto.driver.macro.MacroService;
 import io.trino.benchto.driver.utils.TimeUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.Duration;
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ExecutionDriverTest
 {
     @Mock
@@ -69,7 +69,7 @@ public class ExecutionDriverTest
     @InjectMocks
     ExecutionDriver driver;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         Benchmark benchmark = mock(Benchmark.class);

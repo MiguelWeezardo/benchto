@@ -14,12 +14,11 @@
 package io.trino.benchto.driver.graphite;
 
 import io.trino.benchto.driver.IntegrationTest;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.HttpServerErrorException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withServerError;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -27,9 +26,6 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 public class GraphiteClientRetryTest
         extends IntegrationTest
 {
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     @Autowired
     private GraphiteClient graphiteClient;
 
@@ -49,13 +45,13 @@ public class GraphiteClientRetryTest
     @Test
     public void testRetries_exceeded()
     {
-        expectedException.expect(HttpServerErrorException.class);
+        assertThrows(HttpServerErrorException.class, () -> {
+            restServiceServer.expect(requestTo("http://graphite:18088/events/")).andRespond(withServerError()); // 1 attempt fail
+            restServiceServer.expect(requestTo("http://graphite:18088/events/")).andRespond(withServerError()); // 2 attempt fail
+            restServiceServer.expect(requestTo("http://graphite:18088/events/")).andRespond(withServerError()); // 3 attempt fail
 
-        restServiceServer.expect(requestTo("http://graphite:18088/events/")).andRespond(withServerError()); // 1 attempt fail
-        restServiceServer.expect(requestTo("http://graphite:18088/events/")).andRespond(withServerError()); // 2 attempt fail
-        restServiceServer.expect(requestTo("http://graphite:18088/events/")).andRespond(withServerError()); // 3 attempt fail
-
-        graphiteClient.storeEvent(new GraphiteClient.GraphiteEventRequest.GraphiteEventRequestBuilder()
-                .build());
+            graphiteClient.storeEvent(new GraphiteClient.GraphiteEventRequest.GraphiteEventRequestBuilder()
+                    .build());
+        });
     }
 }
